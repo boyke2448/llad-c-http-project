@@ -1,5 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+
 #include "tcp.h"
-#include "main.h"
+
+#define PORT 8080
 
 int main() {
         tcp_server server = {0};
