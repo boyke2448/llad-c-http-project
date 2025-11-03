@@ -3,6 +3,7 @@
 
 #include <arpa/inet.h>
 #include <string.h>
+#include <stdio.h>
 #include <unistd.h>
 
 typedef enum {
@@ -20,5 +21,6 @@ typedef struct {
 
 server_status_e bind_tcp_port(tcp_server *server, int port);
 int accept_client(int server_fd);
+void debug_log(char *msg);
 
 #endif // TCP_H
