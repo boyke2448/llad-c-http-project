@@ -1,9 +1,26 @@
 // #include <stdio.h>
 #include <stdlib.h>
 // #include <unistd.h>
+#include "http.h"
 
 #include "tcp.h"
 
+void handle_client(int client_fd) {
+    http_request req = {0};
+
+    if (read_http_request(client_fd, &req) == -1) {
+        debug_log("Failed to read or parse HTTP request");
+        close(client_fd);
+        return;
+    }
+
+    debug_log("HTTP request parsed successfully");
+    debug_log(req.method);
+    debug_log(req.path);
+    debug_log(req.protocol);
+
+    close(client_fd);
+}
 
 int main() {
     tcp_server server = {0};
@@ -21,6 +38,7 @@ int main() {
     }
 
     debug_log("Client connected");
+    handle_client(client_fd);
 
     close(client_fd);
     close(server.socket_fd);
