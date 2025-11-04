@@ -1,5 +1,6 @@
 #include "http.h"
 #include <string.h>
+#include <stdio.h>
 #include <unistd.h>
 
 int read_http_request(int socket_fd, http_request *request) {

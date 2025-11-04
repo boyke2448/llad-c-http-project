@@ -5,6 +5,7 @@ server_status_e bind_tcp_port(tcp_server *server, int port) {
     server->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server->socket_fd == -1) {
         debug_log("Socket creation failed");
+        perror("Error creating socket");
         return SERVER_SOCKET_ERROR;
     }
 
@@ -14,12 +15,14 @@ server_status_e bind_tcp_port(tcp_server *server, int port) {
 
     if (bind(server->socket_fd, (struct sockaddr *)&server->address, sizeof(server->address)) < 0) {
         debug_log("Bind failed");
+        perror("Error binding socket");
         close(server->socket_fd);
         return SERVER_BIND_ERROR;
     }
 
     if (listen(server->socket_fd, 5) < 0) {
         debug_log("Listen failed");
+        perror("Error listening on socket");
         close(server->socket_fd);
         return SERVER_LISTEN_ERROR;
     }
@@ -35,6 +38,7 @@ int accept_client(int server_fd) {
     int client_fd = accept(server_fd, (struct sockaddr *)&client_address, &client_len);
     if (client_fd < 0) {
         debug_log("Accept failed");
+        perror("Error accepting client");
         return -1;
     }
 

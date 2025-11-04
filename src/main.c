@@ -1,4 +1,4 @@
-// #include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 // #include <unistd.h>
 #include "http.h"
@@ -18,8 +18,6 @@ void handle_client(int client_fd) {
     debug_log(req.method);
     debug_log(req.path);
     debug_log(req.protocol);
-
-    close(client_fd);
 }
 
 int main() {
