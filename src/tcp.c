@@ -3,6 +3,7 @@
 server_status_e bind_tcp_port(tcp_server *server, int port) {
     memset(server, 0, sizeof(*server));
     server->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
+    setsockopt(server->socket_fd, SOL_SOCKET, SO_REUSEADDR, &(int){ 1 }, sizeof(int));
     if (server->socket_fd == -1) {
         debug_log("Socket creation failed");
         perror("Error creating socket");
